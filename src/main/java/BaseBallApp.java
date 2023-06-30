@@ -1,4 +1,6 @@
 
+import dto.PositionRespDTO;
+import dto.PositionRespDTOPivot;
 import dto.TeamRespDTO;
 import Dao.PlayerDao;
 
@@ -32,6 +34,14 @@ public class BaseBallApp {
             TeamRespDTO teamRespDTO = new TeamRespDTO(connection);
             TeamService teamService = new TeamService(teamRespDTO);
             teamService.getTeam();
+        } else if(userInput.equals("포지션별목록")) {
+          PositionRespDTOPivot positionRespDTOPivot = new PositionRespDTOPivot(connection);
+          PlayerService playerService = new PlayerService(positionRespDTOPivot);
+          playerService.getPositionPlayerPivot();
+
+//        PositionRespDTO positionRespDTO = new PositionRespDTO(connection);
+//        PlayerService playerService = new PlayerService(positionRespDTO);
+//        playerService.getPositionPlayer();
         }
         else if (userInput.startsWith("선수등록")) {
             String[] params = userInput.split("\\?")[1].split("&");

@@ -8,8 +8,6 @@ import java.sql.Timestamp;
 
 @ToString
 public class TeamRespDTO {
-
-    private Connection connection;
     
     int id;
     int stadiumId;

@@ -1,6 +1,8 @@
 package Dao;
 
 import constant.Position;
+import dto.PositionRespDTO;
+import dto.PositionRespDTOPivot;
 import model.Player;
 
 import java.sql.*;
@@ -96,6 +98,59 @@ public class PlayerDao {
             statement.setInt(1, playerId);
             statement.executeUpdate();
         }
+    }
+
+    // 3.10
+    //        String query = "SELECT player_position, MAX(CASE WHEN team_name = '롯데' THEN player_name END) AS '롯데', MAX(CASE WHEN team_name = '두산' THEN player_name END) AS '두산', MAX(CASE WHEN team_name = '키움' THEN player_name END) AS '키움' FROM player JOIN team ON player.team_id = team.team_id GROUP BY player_position ";
+    public List<PositionRespDTO> positionPlayer() {
+        List<PositionRespDTO> positionList = new ArrayList<>();
+        String query = "SELECT t.team_name, p.player_position, p.player_name FROM team t LEFT JOIN player p ON t.team_id = p.team_id";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                PositionRespDTO positionRespDTO = new PositionRespDTO(
+                        rs.getString("team_name"),
+                        rs.getString("player_position"),
+                        rs.getString("player_name")
+                );
+                positionList.add(positionRespDTO);
+            }
+            return positionList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return positionList;
+    }
+
+    public List<PositionRespDTOPivot> positionPlayerSecond() {
+        List<PositionRespDTOPivot> positionList = new ArrayList<>();
+        String query = "SELECT player_position, " +
+                "MAX(CASE WHEN team_name = '롯데' THEN player_name END) AS '롯데', " +
+                "MAX(CASE WHEN team_name = '두산' THEN player_name END) AS '두산', " +
+                "MAX(CASE WHEN team_name = '키움' THEN player_name END) AS '키움' " +
+                "FROM player " +
+                "JOIN team ON player.team_id = team.team_id " +
+                "GROUP BY player_position";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                PositionRespDTOPivot positionRespDTOpivot = new PositionRespDTOPivot(
+                        rs.getString("player_position"),
+                        rs.getString("롯데"),
+                        rs.getString("두산"),
+                        rs.getString("키움")
+                );
+                positionList.add(positionRespDTOpivot);
+            }
+            return positionList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return positionList;
     }
 
 
