@@ -1,6 +1,7 @@
 package Dao;
 
 import constant.Position;
+import dto.OutPlayerRespDTO;
 import model.OutPlayer;
 
 import java.sql.*;
@@ -57,5 +58,34 @@ public class OutPlayerDao {
         return null;
     }
 
+
+    public List<OutPlayerRespDTO> getOutPlayerTable() {
+        List<OutPlayerRespDTO> outPlayerList = new ArrayList<>();
+        String query = "select p.player_id as 'p.id', p.player_name as 'p.name', p.player_position as 'p.position', " +
+                "o.out_player_reason as 'o.reason', o.out_player_created_at as 'o.day' " +
+                "from player p " +
+                "left join out_player o on p.player_id = o.player_id " +
+                "ORDER BY p.player_id ASC";
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                OutPlayerRespDTO outPlayerRespDTO = new OutPlayerRespDTO(
+                    rs.getInt("p.id"),
+                    rs.getString("p.name"),
+                    rs.getString("p.position"),
+                    rs.getString("o.reason"),
+                    rs.getString("o.day")
+            );
+                outPlayerList.add(outPlayerRespDTO);
+            }
+            return outPlayerList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return outPlayerList;
+    }
 
 }

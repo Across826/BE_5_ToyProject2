@@ -11,7 +11,6 @@ public class TeamDao {
 
     private final Connection connection;
 
-
     public TeamDao(Connection connection) {
         this.connection = connection;
     }

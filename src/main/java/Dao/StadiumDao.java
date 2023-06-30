@@ -9,7 +9,6 @@ import java.util.List;
 public class StadiumDao {
 
     private final Connection connection;
-
     public StadiumDao(Connection connection) {
         this.connection = connection;
     }

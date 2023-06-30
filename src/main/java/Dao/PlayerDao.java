@@ -126,12 +126,12 @@ public class PlayerDao {
 
     public List<PositionRespDTOPivot> positionPlayerSecond() {
         List<PositionRespDTOPivot> positionList = new ArrayList<>();
-        String query = "SELECT player_position, " +
-                "MAX(CASE WHEN team_name = '롯데' THEN player_name END) AS '롯데', " +
-                "MAX(CASE WHEN team_name = '두산' THEN player_name END) AS '두산', " +
-                "MAX(CASE WHEN team_name = '키움' THEN player_name END) AS '키움' " +
-                "FROM player " +
-                "JOIN team ON player.team_id = team.team_id " +
+        String query = "select player_position, " +
+                "MAX(CASE WHEN team_name = '롯데' THEN player_name END) as '롯데', " +
+                "MAX(CASE WHEN team_name = '두산' THEN player_name END) as '두산', " +
+                "MAX(CASE WHEN team_name = '키움' THEN player_name END) as'키움' " +
+                "from player " +
+                "join team on player.team_id = team.team_id " +
                 "GROUP BY player_position";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {

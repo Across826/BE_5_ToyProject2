@@ -2,22 +2,36 @@ package Service;
 
 import Dao.OutPlayerDao;
 import Dao.PlayerDao;
+import Dao.TeamDao;
 import db.DBConnection;
+import dto.OutPlayerRespDTO;
+import dto.PositionRespDTO;
 import model.OutPlayer;
 import model.Player;
+import model.Team;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.List;
 
 public class OutPlayerService {
     private Connection connection;
     private PlayerDao playerDao;
     private OutPlayerDao outPlayerDao;
+    private TeamDao teamDao;
+    private OutPlayerRespDTO outPlayerRespDTO;
     public OutPlayerService(Connection connection) {
         this.connection = connection;
         this.outPlayerDao = new OutPlayerDao(connection);
         this.playerDao = new PlayerDao(connection);
+    }
+    public OutPlayerService(OutPlayerRespDTO outPlayerRespDTO) {
+        this.connection = DBConnection.getInstance();
+        this.teamDao = new TeamDao(connection);
+        this.playerDao = new PlayerDao(connection);
+        this.outPlayerDao = new OutPlayerDao(connection);
+        this.outPlayerRespDTO = outPlayerRespDTO;
     }
 
     public void registerOutPlayer(int playerId, String reason) {
@@ -67,5 +81,11 @@ public class OutPlayerService {
         }
 
         System.out.println("퇴출 선수 등록이 완료되었습니다.");
+    }
+
+    public void getOutPlayer() {
+        List<OutPlayerRespDTO> outPlayerRespList = outPlayerDao.getOutPlayerTable();
+
+        System.out.println(outPlayerRespList.toString());
     }
 }
