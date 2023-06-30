@@ -26,15 +26,15 @@ public class BaseBallApp {
         String userInput = scanner.nextLine();
 
         //@Todo main 줄이기
-        if (userInput.equals("야구장목록")){
+        if (userInput.equals("야구장목록")){ // 3.2
             StadiumDao stadiumDao = new StadiumDao(connection);
             StadiumService stadiumService = new StadiumService(stadiumDao);
             stadiumService.getStadium();
-        } else if (userInput.equals("팀목록")){
+        } else if (userInput.equals("팀목록")){ // 3.4
             TeamRespDTO teamRespDTO = new TeamRespDTO(connection);
             TeamService teamService = new TeamService(teamRespDTO);
             teamService.getTeam();
-        } else if(userInput.equals("포지션별목록")) {
+        } else if(userInput.equals("포지션별목록")) { // 3. 10
           PositionRespDTOPivot positionRespDTOPivot = new PositionRespDTOPivot(connection);
           PlayerService playerService = new PlayerService(positionRespDTOPivot);
           playerService.getPositionPlayerPivot();
@@ -42,8 +42,29 @@ public class BaseBallApp {
 //        PositionRespDTO positionRespDTO = new PositionRespDTO(connection);
 //        PlayerService playerService = new PlayerService(positionRespDTO);
 //        playerService.getPositionPlayer();
+        } else if (userInput.startsWith("선수목록")) { // 3.6
+            String[] params = userInput.split("\\?")[1].split("&");
+            int teamId = 0;
+
+            for (String param : params) {
+                String[] keyValue = param.split("=");
+                String key = keyValue[0];
+                String value = keyValue[1];
+
+                switch (key) {
+                    case "teamId":
+                        teamId = Integer.parseInt(value);
+                        break;
+                    default:
+                        System.out.println("잘못된 입력입니다.");
+                        return;
+                }
+            }
+            PlayerDao playerDao = new PlayerDao(connection);
+            PlayerService playerService = new PlayerService(playerDao);
+            playerService.getPlayers(teamId);
         }
-        else if (userInput.startsWith("선수등록")) {
+        else if (userInput.startsWith("선수등록")) { //3.5
             String[] params = userInput.split("\\?")[1].split("&");
             int teamId = 0;
             String name = "";
@@ -79,7 +100,7 @@ public class BaseBallApp {
             if (result == 1) {
                 System.out.println("선수 등록이 성공적으로 완료되었습니다.");
             }
-        } else if (userInput.startsWith("야구장등록")) {
+        } else if (userInput.startsWith("야구장등록")) { //3.1
             String[] params = userInput.split("\\?")[1].split("&");
             String name = "";
 
@@ -105,7 +126,7 @@ public class BaseBallApp {
             if (result == 1) {
                 System.out.println("야구장 등록이 성공적으로 완료되었습니다.");
             }
-        } else if (userInput.startsWith("팀등록")) {
+        } else if (userInput.startsWith("팀등록")) {// 3.3
             String[] params = userInput.split("\\?")[1].split("&");
             int stadiumId = 0;
             String name = "";
@@ -134,7 +155,7 @@ public class BaseBallApp {
                 System.out.println("팀 등록이 성공적으로 완료되었습니다.");
             }
 
-        } else if (userInput.startsWith("퇴출등록")) {
+        } else if (userInput.startsWith("퇴출등록")) { // 3.7
             String[] params = userInput.split("\\?")[1].split("&");
             int playerId = 0;
             String reason = "";

@@ -67,7 +67,7 @@ public class PlayerDao {
     // 팀별 선수 목록
     public List<Player> getPlayers(int teamId) {
         List<Player> players = new ArrayList<>();
-        String query = "select * from player_tb where team_id=?";
+        String query = "select * from player where team_id=?";
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, teamId);

@@ -35,6 +35,13 @@ public class PlayerService {
         this.playerDao = playerDao;
     }
 
+
+
+    public void getPlayers(int teamId) {
+        List<Player> playerList = playerDao.getPlayers(teamId);
+        System.out.println(playerList.toString());
+    }
+
     public int registerPlayer(int teamId, String name, Position position) {
         return playerDao.registerPlayer(teamId, name, position);
     }
@@ -49,9 +56,7 @@ public class PlayerService {
 
         System.out.println(positionRespDTO.toString());
     }
-    public List<Player> getPlayers(int teamId) {
-        return playerDao.getPlayers(teamId);
-    }
+
 
 
 }
