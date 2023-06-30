@@ -5,10 +5,8 @@ import Dao.PlayerDao;
 import Dao.TeamDao;
 import db.DBConnection;
 import dto.OutPlayerRespDTO;
-import dto.PositionRespDTO;
 import model.OutPlayer;
 import model.Player;
-import model.Team;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -35,7 +33,6 @@ public class OutPlayerService {
     }
 
     public void registerOutPlayer(int playerId, String reason) {
-        // 플레이어 조회
         Player player = playerDao.getPlayerById(playerId);
 
         if (player == null) {
@@ -48,16 +45,13 @@ public class OutPlayerService {
         OutPlayer outPlayer = new OutPlayer(0, playerId, reason, timestamp);
 
         try {
-            // 트랜잭션 시작
             playerDao.getConnection().setAutoCommit(false);
 
-            // out_player 테이블에 퇴출 선수 등록
             outPlayerDao.registerOutPlayer(
                     outPlayer.getPlayerId(),
                     outPlayer.getOutPlayerReason()
             );
 
-            // player 테이블에서 해당 선수의 team_id를 null로 업데이트
             playerDao.updateTeamIdToNull(playerId);
 
             // 트랜잭션 커밋
@@ -82,7 +76,6 @@ public class OutPlayerService {
 
         System.out.println("퇴출 선수 등록이 완료되었습니다.");
     }
-
     public void getOutPlayer() {
         List<OutPlayerRespDTO> outPlayerRespList = outPlayerDao.getOutPlayerTable();
 

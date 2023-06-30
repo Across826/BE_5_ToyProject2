@@ -1,6 +1,5 @@
 
 import dto.OutPlayerRespDTO;
-import dto.PositionRespDTO;
 import dto.PositionRespDTOPivot;
 import dto.TeamRespDTO;
 import Dao.PlayerDao;
@@ -27,27 +26,25 @@ public class BaseBallApp {
         String userInput = scanner.nextLine();
 
         //@Todo main 줄이기
-        if (userInput.equals("야구장목록")){ // 3.2
+        if (userInput.equals("야구장목록")){
             StadiumDao stadiumDao = new StadiumDao(connection);
             StadiumService stadiumService = new StadiumService(stadiumDao);
             stadiumService.getStadium();
-        } else if (userInput.equals("팀목록")){ // 3.4
+        } else if (userInput.equals("팀목록")){
             TeamRespDTO teamRespDTO = new TeamRespDTO(connection);
             TeamService teamService = new TeamService(teamRespDTO);
             teamService.getTeam();
-        } else if(userInput.equals("포지션별목록")) { // 3. 10
+        } else if(userInput.equals("포지션별목록")) {
           PositionRespDTOPivot positionRespDTOPivot = new PositionRespDTOPivot(connection);
           PlayerService playerService = new PlayerService(positionRespDTOPivot);
           playerService.getPositionPlayerPivot();
-//        PositionRespDTO positionRespDTO = new PositionRespDTO(connection);
-//        PlayerService playerService = new PlayerService(positionRespDTO);
-//        playerService.getPositionPlayer();
+
         } else if(userInput.equals("퇴출목록")) {
             OutPlayerRespDTO outPlayerRespDTO = new OutPlayerRespDTO(connection);
             OutPlayerService outPlayerService = new OutPlayerService(outPlayerRespDTO);
             outPlayerService.getOutPlayer();
 
-        } else if (userInput.startsWith("선수목록")) { // 3.6
+        } else if (userInput.startsWith("선수목록")) {
             String[] params = userInput.split("\\?")[1].split("&");
             int teamId = 0;
 
@@ -69,7 +66,7 @@ public class BaseBallApp {
             PlayerService playerService = new PlayerService(playerDao);
             playerService.getPlayers(teamId);
         }
-        else if (userInput.startsWith("선수등록")) { //3.5
+        else if (userInput.startsWith("선수등록")) {
             String[] params = userInput.split("\\?")[1].split("&");
             int teamId = 0;
             String name = "";
@@ -105,7 +102,7 @@ public class BaseBallApp {
             if (result == 1) {
                 System.out.println("선수 등록이 성공적으로 완료되었습니다.");
             }
-        } else if (userInput.startsWith("야구장등록")) { //3.1
+        } else if (userInput.startsWith("야구장등록")) {
             String[] params = userInput.split("\\?")[1].split("&");
             String name = "";
 
@@ -131,7 +128,7 @@ public class BaseBallApp {
             if (result == 1) {
                 System.out.println("야구장 등록이 성공적으로 완료되었습니다.");
             }
-        } else if (userInput.startsWith("팀등록")) {// 3.3
+        } else if (userInput.startsWith("팀등록")) {
             String[] params = userInput.split("\\?")[1].split("&");
             int stadiumId = 0;
             String name = "";
@@ -160,7 +157,7 @@ public class BaseBallApp {
                 System.out.println("팀 등록이 성공적으로 완료되었습니다.");
             }
 
-        } else if (userInput.startsWith("퇴출등록")) { // 3.7
+        } else if (userInput.startsWith("퇴출등록")) {
             String[] params = userInput.split("\\?")[1].split("&");
             int playerId = 0;
             String reason = "";

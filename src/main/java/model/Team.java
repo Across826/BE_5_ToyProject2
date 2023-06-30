@@ -8,8 +8,8 @@ import java.sql.Timestamp;
 
 @Getter @ToString
 public class Team {
-    private int id;         //pk
-    private int stadiumId; //fk
+    private int id;
+    private int stadiumId;
     private String name;
     private Timestamp createdAt;
 

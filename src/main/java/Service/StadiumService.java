@@ -16,13 +16,9 @@ public class StadiumService {
         this.stadiumDao = stadiumDao;
         this.connection = DBConnection.getInstance();
     }
-
-
     public int registerStadium(String name) {
         return stadiumDao.registerStadium(name);
     }
-
-
     public void getStadium() {
         List<Stadium> stadiumList = stadiumDao.getStadiumList();
         System.out.println(stadiumList.toString());

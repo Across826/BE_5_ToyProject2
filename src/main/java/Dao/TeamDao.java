@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TeamDao {
-    // 팀 등록
-
     private final Connection connection;
 
     public TeamDao(Connection connection) {
@@ -31,11 +29,9 @@ public class TeamDao {
         }
         return 0;
     }
-    // 전체 팀 목록
     public List<TeamRespDTO> getTeamList() {
 
         List<TeamRespDTO> teamList = new ArrayList<>();
-//        String query = "select t.team_id, t.team_name, s.stadium_name from team t inner join stadium s ON t.stadium_id = s.stadium_id";
         String query = "SELECT t.team_id, s.stadium_id, t.team_name,t.team_created_at, s.stadium_name, s.stadium_created_at " +
                 "FROM team t " +
                 "JOIN stadium s ON t.stadium_id = s.stadium_id";

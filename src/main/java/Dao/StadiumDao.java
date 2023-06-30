@@ -31,8 +31,6 @@ public class StadiumDao {
         return 0;
     }
 
-    // 전체 야구장 목록 보기
-
     public List<Stadium> getStadiumList() {
 
         List<Stadium> stadiumList = new ArrayList<>();
