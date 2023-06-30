@@ -28,7 +28,7 @@ public class PlayerService {
         this.connection = DBConnection.getInstance();
         this.teamDao = new TeamDao(connection);
         this.playerDao = new PlayerDao(connection);
-        this.positionRespDTO = positionRespDTO;
+        this.positionRespDTOPivot = positionRespDTOPivot;
     }
 
     public PlayerService(PlayerDao playerDao) {
